@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="抽奖或游戏之类的动画很多时候用到掷骰子，一般采用gif图片格式实现动画效果。gif图片占内存较大，用户体验不好，下面用css3实现的掷骰子效果，骰子点数、面和转动效果都是有css，css3完成的。截图gif图如下：；这个特么的有点快啊动态图；打开可见效果：链接网页http://htmlpreview.github.io/?https://github.com/buwu/simple/blob/ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css3实现掷骰子（无图实现）">
+<meta property="og:url" content="http://yoursite.com/2018/03/25/css3/index.html">
+<meta property="og:site_name" content="不悟的小窝">
+<meta property="og:description" content="抽奖或游戏之类的动画很多时候用到掷骰子，一般采用gif图片格式实现动画效果。gif图片占内存较大，用户体验不好，下面用css3实现的掷骰子效果，骰子点数、面和转动效果都是有css，css3完成的。截图gif图如下：；这个特么的有点快啊动态图；打开可见效果：链接网页http://htmlpreview.github.io/?https://github.com/buwu/simple/blob/ma">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5262502-e50e81cde498e4a8.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5262502-83f811c5bfeccd8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5262502-d19bfefdf66ea882.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-28T03:32:52.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css3实现掷骰子（无图实现）">
+<meta name="twitter:description" content="抽奖或游戏之类的动画很多时候用到掷骰子，一般采用gif图片格式实现动画效果。gif图片占内存较大，用户体验不好，下面用css3实现的掷骰子效果，骰子点数、面和转动效果都是有css，css3完成的。截图gif图如下：；这个特么的有点快啊动态图；打开可见效果：链接网页http://htmlpreview.github.io/?https://github.com/buwu/simple/blob/ma">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5262502-e50e81cde498e4a8.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/25/css3/"/>
+
+
+
+
+
+  <title>css3实现掷骰子（无图实现） | 不悟的小窝</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不悟的小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">welcome ~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/25/css3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="不悟">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/huiyuanai0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不悟的小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">css3实现掷骰子（无图实现）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T22:52:44+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>抽奖或游戏之类的动画很多时候用到掷骰子，一般采用gif图片格式实现动画效果。gif图片占内存较大，用户体验不好，下面用css3实现的掷骰子效果，骰子点数、面和转动效果都是有css，css3完成的。截图gif图如下：<br><img src="http://upload-images.jianshu.io/upload_images/5262502-e50e81cde498e4a8.gif?imageMogr2/auto-orient/strip" alt="骰子.gif">；这个特么的有点快啊动态图；<br>打开可见效果：链接网页<a href="http://htmlpreview.github.io/?https://github.com/buwu/simple/blob/master/3d%E6%8E%B7%E9%AA%B0%E5%AD%90.html" target="_blank" rel="noopener">http://htmlpreview.github.io/?https://github.com/buwu/simple/blob/master/3d%E6%8E%B7%E9%AA%B0%E5%AD%90.html</a><br>制作过程如下：</p>
+<p>######一、制作六个面，如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5262502-83f811c5bfeccd8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1494556776(1).jpg"><br>完全用css写出来，为了使其更加真实，可以让点数的圆圈加一些阴影，这一步比较简单。</p>
+<p>######二、将六个面拼成一个骰子<br><img src="http://upload-images.jianshu.io/upload_images/5262502-d19bfefdf66ea882.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br>这一步需要用到css3的transform中rotate和translate。下面的css代码会纤细讲到。</p>
+<p>######三、让骰子动起来<br>这一步需要用到css3的animation。详细看下面css代码。</p>
+<p>#####1.模板如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*span是点数*/</span><br><span class="line">&lt;div id=&quot;wrapper&quot;&gt;</span><br><span class="line">        &lt;div id=&quot;group&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page1&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page2&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page3&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page4&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page5&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;page&quot; id=&quot;page6&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">         &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>#####2.css<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line">/*需要注意css3中X轴以右为正方向，Y轴向下为正方向，Z轴以向屏幕外面为正方向*/</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">        #wrapper&#123;</span><br><span class="line">            perspective: 500px;/*设置骰子被查看位置的视图（观察者与z=0平面的距离）：*/</span><br><span class="line">            -webkit-perspective:500px;</span><br><span class="line">            -moz-perspective:500px;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line">        #group&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            position: relative;</span><br><span class="line">            transform-style:preserve-3d;/*使其子元素保持3D转换*/</span><br><span class="line">            -webkit-transform-style:preserve-3d;</span><br><span class="line">            -moz-transform-style:preserve-3d;</span><br><span class="line">            transform-origin:50% 50% -100px;/*设置骰子旋转的基点位置（骰子中心点）*/</span><br><span class="line">            -webkit-transform-origin:50% 50% -100px;</span><br><span class="line">            -moz-transform-origin:50% 50% -100px;</span><br><span class="line">            margin: 200px auto;</span><br><span class="line">            transform-animation:scroll 3s linear 0s infinite;/*设置骰子动画效果*/</span><br><span class="line">            -webkit-animation:scroll 3s linear 0s infinite;</span><br><span class="line">            -moz-animation:scroll 3s linear 0s infinite;</span><br><span class="line">            background-color:#E8E8E9;</span><br><span class="line">            border-radius:20px;</span><br><span class="line">        &#125;</span><br><span class="line">        .page&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            position: absolute;</span><br><span class="line">            border-radius: 20px;</span><br><span class="line">            text-align: center;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">            text-align: center;</span><br><span class="line">            background-color:#E8E8E9;</span><br><span class="line">            border:1px solid #E0E0E0; </span><br><span class="line">        &#125;</span><br><span class="line">        /*开始设置每个面的角度，将6个面拼成一个正方体*/</span><br><span class="line">        #page1&#123;</span><br><span class="line">        &#125;</span><br><span class="line">        #page2&#123;</span><br><span class="line">            transform-origin:right;/*点数为2的面以右边为转轴转动*/</span><br><span class="line">            transform:rotateY(-90deg);/*绕Y轴逆时针转动90度*/</span><br><span class="line">            -webkit-transform-origin:right;</span><br><span class="line">            -webkit-transform:rotateY(-90deg);</span><br><span class="line">            -moz-transform-origin:right;</span><br><span class="line">            -moz-transform:rotateY(-90deg);</span><br><span class="line">        &#125;</span><br><span class="line">        #page3&#123;</span><br><span class="line">            transform-origin:left;/*点数为3的面以左边为转轴转动*/</span><br><span class="line">            transform:rotateY(90deg);/*绕Y轴顺时针转动90度*/</span><br><span class="line">            -webkit-transform-origin:left;</span><br><span class="line">            -webkit-transform:rotateY(90deg);</span><br><span class="line">            -moz-transform-origin:left;</span><br><span class="line">            -moz-transform:rotateY(90deg);</span><br><span class="line">        &#125;</span><br><span class="line">        #page4&#123;</span><br><span class="line">            transform-origin:top;/*点数为4的面以上边为转轴转动*/</span><br><span class="line">            transform:rotateX(-90deg);/*绕X轴逆时针转动90度*/</span><br><span class="line">            -webkit-transform-origin:top;</span><br><span class="line">            -webkit-transform:rotateX(-90deg);</span><br><span class="line">            -moz-transform-origin:top;</span><br><span class="line">            -moz-transform:rotateX(-90deg);</span><br><span class="line">        &#125;</span><br><span class="line">        #page5&#123;</span><br><span class="line">            transform-origin:bottom;/*点数为5的面以下边为转轴转动*/</span><br><span class="line">            transform:rotateX(90deg);/*绕X轴顺时针转动90度*/</span><br><span class="line">            -webkit-transform-origin:bottom;</span><br><span class="line">            -webkit-transform:rotateX(90deg);</span><br><span class="line">            -moz-transform-origin:bottom;</span><br><span class="line">            -moz-transform:rotateX(90deg);</span><br><span class="line">        &#125;</span><br><span class="line">        #page6&#123;</span><br><span class="line">            transform:translateZ(-200px);/*点数为6的面沿Z轴向后平移200px*/</span><br><span class="line">            -webkit-transform:translateZ(-200px);</span><br><span class="line">            -moz-transform:translateZ(-200px);</span><br><span class="line">        &#125;</span><br><span class="line">        .page span &#123;</span><br><span class="line">            display:inline-block;</span><br><span class="line">            width:50px;</span><br><span class="line">            height:50px;</span><br><span class="line">            border-radius:25px;</span><br><span class="line">            background-color:#050505;</span><br><span class="line">            box-shadow:inset 3px 3px 5px #000;/*骰子点数的阴影效果*/</span><br><span class="line">        &#125;</span><br><span class="line">        /*下面是对点数样式的控制*/</span><br><span class="line">        #page1 span&#123;</span><br><span class="line">            position:absolute;</span><br><span class="line">            left:50%;</span><br><span class="line">            top:50%;</span><br><span class="line">            margin-top:-25px;</span><br><span class="line">            margin-left: -25px;</span><br><span class="line">            background-color:#f00;</span><br><span class="line">        &#125;</span><br><span class="line">        #page2 span &#123;</span><br><span class="line">            margin:75px 25px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page3 span &#123;</span><br><span class="line">            position:absolute;</span><br><span class="line">        &#125;</span><br><span class="line">        #page3 span:first-child &#123;</span><br><span class="line">            top:20px;</span><br><span class="line">            left:20px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page3 span:nth-child(2) &#123;</span><br><span class="line">            top:75px;</span><br><span class="line">            left:75px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page3 span:last-child &#123;</span><br><span class="line">            bottom:20px;</span><br><span class="line">            right:20px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page4 span &#123;</span><br><span class="line">            margin:25px 25px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page5 span &#123;</span><br><span class="line">            margin:25px 25px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page5 span:last-child &#123;</span><br><span class="line">            position:absolute;</span><br><span class="line">            top:50%;</span><br><span class="line">            left:50%;</span><br><span class="line">            margin-left:-25px;</span><br><span class="line">            margin-top:-25px;</span><br><span class="line">        &#125;</span><br><span class="line">        #page6 span &#123;</span><br><span class="line">            margin:7px 25px;</span><br><span class="line">        &#125;</span><br><span class="line">        /*设置骰子具体动画效果 确保骰子的每个面都可以看到，后面会运动快一些*/</span><br><span class="line">        @keyframes scroll &#123;</span><br><span class="line">            0% &#123;</span><br><span class="line">                transform:rotateY(0deg) rotateX(0deg) rotateZ(0deg);</span><br><span class="line">            &#125;</span><br><span class="line">            25% &#123;</span><br><span class="line">                transform:rotateY(0deg) rotateX(90deg) rotateZ(90deg);</span><br><span class="line">            &#125;</span><br><span class="line">            50% &#123;</span><br><span class="line">                transform:rotateY(0deg) rotateX(180deg) rotateZ(180deg);</span><br><span class="line">            &#125; </span><br><span class="line">            75% &#123;</span><br><span class="line">                transform:rotateY(180deg) rotateX(270deg) rotateZ(270deg);</span><br><span class="line">            &#125;</span><br><span class="line">            100% &#123;</span><br><span class="line">                transform:rotateY(360deg) rotateX(360deg) rotateZ(360deg);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        @-moz-keyframes scroll &#123;</span><br><span class="line">            0% &#123;</span><br><span class="line">                -moz-transform:rotateY(0deg) rotateX(0deg) rotateZ(0deg);</span><br><span class="line">            &#125;</span><br><span class="line">            25% &#123;</span><br><span class="line">                -moz-transform:rotateY(0deg) rotateX(90deg) rotateZ(90deg);</span><br><span class="line">            &#125;</span><br><span class="line">            50% &#123;</span><br><span class="line">                -moz-transform:rotateY(0deg) rotateX(180deg) rotateZ(180deg);</span><br><span class="line">            &#125; </span><br><span class="line">            75% &#123;</span><br><span class="line">                -moz-transform:rotateY(180deg) rotateX(270deg) rotateZ(270deg);</span><br><span class="line">            &#125;</span><br><span class="line">            100% &#123;</span><br><span class="line">                -moz-transform:rotateY(360deg) rotateX(360deg) rotateZ(360deg);</span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">        @-webkit-keyframes scroll &#123;</span><br><span class="line">            0% &#123;</span><br><span class="line">                -webkit-transform:rotateY(0deg) rotateX(0deg) rotateZ(0deg);</span><br><span class="line">            &#125;</span><br><span class="line">            25% &#123;</span><br><span class="line">                -webkit-transform:rotateY(0deg) rotateX(90deg) rotateZ(90deg);</span><br><span class="line">            &#125;</span><br><span class="line">            50% &#123;</span><br><span class="line">                -webkit-transform:rotateY(0deg) rotateX(180deg) rotateZ(180deg);</span><br><span class="line">            &#125; </span><br><span class="line">            75% &#123;</span><br><span class="line">                -webkit-transform:rotateY(180deg) rotateX(270deg) rotateZ(270deg);</span><br><span class="line">            &#125;</span><br><span class="line">            100% &#123;</span><br><span class="line">                -webkit-transform:rotateY(360deg) rotateX(360deg) rotateZ(360deg);</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/28/rotatetree/" rel="prev" title="海贼王旋转通缉令">
+                海贼王旋转通缉令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/huiyuanai0.jpg"
+                alt="不悟" />
+            
+              <p class="site-author-name" itemprop="name">不悟</p>
+              <p class="site-description motion-element" itemprop="description">不卑不亢，不慌不忙，也许生活应该这样</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不悟</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
